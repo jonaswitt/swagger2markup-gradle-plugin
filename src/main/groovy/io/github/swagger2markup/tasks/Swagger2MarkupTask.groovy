@@ -57,20 +57,16 @@ class Swagger2MarkupTask extends DefaultTask {
                 logger.debug("k: {}", v)
             }
         }
-        try{
-            Swagger2MarkupConfig swagger2MarkupConfig = new Swagger2MarkupConfigBuilder(config).build();
-            Swagger2MarkupConverter converter = Swagger2MarkupConverter.from(URIUtils.create(swaggerInput))
-                    .withConfig(swagger2MarkupConfig).build();
+        Swagger2MarkupConfig swagger2MarkupConfig = new Swagger2MarkupConfigBuilder(config).build();
+        Swagger2MarkupConverter converter = Swagger2MarkupConverter.from(URIUtils.create(swaggerInput))
+                .withConfig(swagger2MarkupConfig).build();
 
-            if(outputFile != null){
-                converter.toFile(outputFile.toPath());
-            }else if (outputDir != null){
-                converter.toFolder(outputDir.toPath());
-            }else {
-                throw new IllegalArgumentException("Either outputFile or outputDir parameter must be used");
-            }
-        }catch (Exception e){
-            throw new GradleException("Failed to execute task 'convertSwagger2markup'", e);
+        if(outputFile != null){
+            converter.toFile(outputFile.toPath());
+        }else if (outputDir != null){
+            converter.toFolder(outputDir.toPath());
+        }else {
+            throw new IllegalArgumentException("Either outputFile or outputDir parameter must be used");
         }
         logger.debug("convertSwagger2markup task finished")
     }
